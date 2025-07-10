@@ -345,7 +345,6 @@ def get_signin_stats(ns_cookie, days=30):
             'days_count': days_count,
             'records': signin_records,
             'period': period_desc
-
         }
         
         return stats, "查询成功"
