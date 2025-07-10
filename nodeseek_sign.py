@@ -249,10 +249,10 @@ def get_signin_stats(ns_cookie, days=30):
     """查询前days天内的签到收益统计"""
     if not ns_cookie:
         return None, "无有效Cookie"
-
-        if days <= 0:
+    
+    if days <= 0:
         days = 1
-  
+    
     headers = {
         'User-Agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36 Edg/125.0.0.0",
         'origin': "https://www.nodeseek.com",
@@ -284,12 +284,12 @@ def get_signin_stats(ns_cookie, days=30):
             if not records:
                 break
                 
-            # 检查最后一条记录的时间，如果超出本月范围就停止
+            # 检查最后一条记录的时间，如果超出查询范围就停止
             last_record_time = datetime.fromisoformat(
                 records[-1][3].replace('Z', '+00:00'))
             last_record_time_shanghai = last_record_time.astimezone(shanghai_tz)
             if last_record_time_shanghai < query_start_time:
-                # 只添加在本月范围内的记录
+                # 只添加在查询范围内的记录
                 for record in records:
                     record_time = datetime.fromisoformat(
                         record[3].replace('Z', '+00:00'))
@@ -319,12 +319,12 @@ def get_signin_stats(ns_cookie, days=30):
                     'date': record_time_shanghai.strftime('%Y-%m-%d'),
                     'description': description
                 })
-
+        
         # 生成时间范围描述
         period_desc = f"近{days}天"
         if days == 1:
             period_desc = "今天"
-            
+        
         if not signin_records:
             return {
                 'total_amount': 0,
